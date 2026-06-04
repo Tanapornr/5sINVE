@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>รายละเอียดหลักการ 5ส | 5S Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Prompt', 'sans-serif'] },
+                    colors: {
+                        invenavy: '#064D6C',
+                        invegreen: '#A4B644',
+                        // สีสำหรับแท็บและโฟลเดอร์
+                        folderbg: '#A4B644',
+                        subfolderbg: '#f4f6eb',
+                        tabinactive: '#8c9c3a', 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body, html { 
+            background-color: #f8fafc; /* พื้นหลังสีเทาอ่อนๆ ให้แฟ้มดูโดดเด่น */
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* เอฟเฟกต์ตัวหนังสือ 251 นโยบาย */
+        .sticker-text-green {
+            color: #A4B644;
+            text-shadow: 
+                -2px -2px 0 #064D6C,  
+                 2px -2px 0 #064D6C,
+                -2px  2px 0 #064D6C,
+                 2px  2px 0 #064D6C,
+                 0px  4px 0px #064D6C;
+            letter-spacing: -1px;
+        }
+
+        /* --- สไตล์โฟลเดอร์ (Folder UI) --- */
+        
+        /* แท็บหลัก (Main Tabs) */
+        .main-tabs-container {
+            display: flex;
+            gap: 4px;
+            padding-left: 16px;
+            position: relative;
+            z-index: 20;
+            overflow-x: auto;
+            scrollbar-width: none; /* ซ่อน Scrollbar */
+        }
+        .main-tabs-container::-webkit-scrollbar { display: none; }
+
+        .main-tab {
+            padding: 12px 24px;
+            border-radius: 16px 16px 0 0;
+            font-weight: 700;
+            font-size: 1.125rem; /* text-lg */
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .main-tab.active {
+            background-color: #A4B644; /* invegreen */
+            color: #ffffff;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        }
+        .main-tab.inactive {
+            background-color: #8c9c3a; /* tabinactive */
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 6px; /* ดันลงนิดนึงให้ดูเป็นแท็บด้านหลัง */
+        }
+        .main-tab.inactive:hover {
+            color: #ffffff;
+            background-color: #95a63f;
+        }
+
+        /* กล่องเนื้อหาหลัก (Main Folder Body) */
+        .folder-body {
+            background-color: #A4B644;
+            border-radius: 0 24px 24px 24px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(164, 182, 68, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .folder-body { border-radius: 0 0 24px 24px; padding: 16px; }
+            .main-tabs-container { padding-left: 0; justify-content: space-between; }
+            .main-tab { padding: 10px 16px; font-size: 1rem; flex-grow: 1; text-align: center; }
+        }
+
+        /* แท็บหัวข้อย่อย (Sub-folder Tab) */
+        .sub-folder-tab {
+            display: inline-block;
+            background-color: #e6ecc1; /* สีเขียวอ่อนๆ */
+            color: #064D6C;
+            font-weight: 800;
+            font-size: 1.25rem;
+            padding: 10px 32px;
+            border-radius: 20px 20px 0 0;
+            margin-bottom: -1px; /* ดึงให้ติดกับกล่องด้านล่าง */
+            position: relative;
+            z-index: 20;
+        }
+
+        /* กล่องเนื้อหาย่อย (Sub-folder Body) */
+        .sub-folder-body {
+            background-color: #e6ecc1;
+            border-radius: 0 20px 20px 20px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        /* รายการ (List Card) */
+        .list-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.1s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .list-card:hover {
+            box-shadow: 0 4px 12px rgba(6, 77, 108, 0.08);
+            transform: translateX(4px);
+        }
+        .list-card:active { transform: scale(0.98); }
+
+        /* วงกลมตัวเลขด้านขวา */
+        .number-badge {
+            background-color: #fde047; /* สีเหลืองแบบในเว็บชัชชาติ */
+            color: #064D6C;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+        }
+
+        /* Navbar Links */
+        .nav-link { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: #064D6C; transition: color 0.2s; }
+        .nav-link:hover { color: #A4B644; }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <nav class="bg-white w-full z-50 px-4 py-4 flex justify-between items-center shadow-sm sticky top-0">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-md bg-invenavy flex items-center justify-center text-white font-black text-xl italic tracking-tighter">
+                5S
+            </div>
+            <div class="h-6 border-l-2 border-gray-300"></div>
+            <span class="font-extrabold text-xl md:text-2xl text-invenavy tracking-tight">ระบบ 5ส</span>
+        </div>
+
+        <div class="hidden md:flex gap-8">
+            <a href="index.html" class="nav-link">หน้าแรก ↗</a>
+            <a href="#" class="nav-link">หลักการ 5ส ↗</a>
+            <a href="#" class="nav-link">คู่มือปฏิบัติงาน ↗</a>
+        </div>
+
+        <div class="flex items-center gap-3 text-invenavy">
+            <button class="font-bold flex items-center gap-1 hover:text-invegreen transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <span class="hidden md:block">ค้นหา</span>
+            </button>
+            <button class="md:hidden block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <header class="max-w-5xl mx-auto px-4 pt-10 pb-8">
+        <h1 class="text-5xl md:text-7xl font-black sticker-text-green uppercase mb-3">
+            5 หลักการ
+        </h1>
+        <p class="text-gray-800 font-medium text-lg md:text-xl">
+            ที่ออกแบบจากปัญหาจริงและข้อมูลเชิงสถิติ ทีมงานพร้อมปฏิบัติงานต่อทันที
+        </p>
+    </header>
+
+    <section class="max-w-5xl mx-auto px-4 md:px-6">
+        
+        <div class="main-tabs-container">
+            <div class="main-tab active">สะสาง</div>
+            <div class="main-tab inactive">สะดวก</div>
+            <div class="main-tab inactive">สะอาด</div>
+            <div class="main-tab inactive">สุขลักษณะ</div>
+        </div>
+
+        <div class="folder-body">
+            
+            <div class="flex justify-between items-start mb-8">
+                <h2 class="text-4xl md:text-5xl font-black text-invenavy">การจัดการพื้นที่</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-invenavy opacity-90 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+            </div>
+
+            <div>
+                <div class="sub-folder-tab">พื้นที่ปฏิบัติงาน</div>
+                <div class="sub-folder-body">
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">คัดแยกสิ่งของที่จำเป็นและไม่จำเป็นออกจากกัน</span>
+                        <div class="number-badge">5</div>
+                    </div>
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">ติดป้ายรอทิ้ง (Red Tag) สำหรับของชำรุด</span>
+                        <div class="number-badge">3</div>
+                    </div>
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">เคลียร์พื้นที่ใต้โต๊ะทำงานให้โล่งและปลอดภัย</span>
+                        <div class="number-badge">8</div>
+                    </div>
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">กำจัดกระดาษหรือเอกสารที่ไม่ใช้แล้ว</span>
+                        <div class="number-badge">4</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+                <div class="sub-folder-tab">ระบบและข้อมูลดิจิทัล</div>
+                <div class="sub-folder-body">
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">ลบไฟล์เอกสารขยะหรือไฟล์ซ้ำซ้อนใน Cloud Drive</span>
+                        <div class="number-badge">12</div>
+                    </div>
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">จัดระเบียบโฟลเดอร์อีเมลให้ค้นหาง่าย</span>
+                        <div class="number-badge">7</div>
+                    </div>
+                    
+                    <div class="list-card">
+                        <span class="font-medium text-gray-800 text-lg">อัปเดตสถานะงานในระบบ Project Management</span>
+                        <div class="number-badge">9</div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div> </section>
+
+</body>
+</html>
