@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5S Policy & Checklist | แบบฟอร์มทีมชัชชาติ</title>
+    <title>หน้าแรก | 5S Management System</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -15,178 +17,158 @@
                     colors: {
                         invenavy: '#064D6C',
                         invegreen: '#A4B644',
-                        // สีสำหรับแท็บที่ไม่ได้เลือก
-                        tabinactive: '#8c9c3a', 
-                        bglight: '#f4f6eb'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #ffffff; }
-        
-        /* สไตล์แท็บหลัก (Main Folder Tab) */
-        .main-tab {
-            border-radius: 16px 16px 0 0;
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-        }
-        
-        /* พื้นที่เนื้อหาหลัก (Main Folder Body) */
-        .folder-body {
-            border-radius: 0 24px 24px 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        body { 
+            background-color: #ffffff; 
+            overflow-x: hidden;
         }
 
-        /* สไตล์แท็บหัวข้อย่อย (Sub-folder Tab) เหมือนในรูป "การเดินทาง / สุขภาพ" */
-        .sub-folder-tab {
-            display: inline-block;
-            background-color: #e6ecc1; /* สีเขียวอ่อนๆ */
+        /* พื้นหลังไล่สีแบบเว็บชัชชาติ (สีเขียวอ่อน/ฟ้าอ่อน ไล่ลงมาเป็นสีขาว) */
+        .hero-bg {
+            background: linear-gradient(180deg, rgba(164,182,68,0.15) 0%, rgba(6,77,108,0.05) 60%, rgba(255,255,255,1) 100%);
+        }
+
+        /* เอฟเฟกต์ตัวหนังสือขอบหนา (Sticker Effect แบบ "กรุงเทพฯ ทำงาน") */
+        .sticker-text-green {
+            color: #A4B644;
+            text-shadow: 
+                -4px -4px 0 #064D6C,  
+                 4px -4px 0 #064D6C,
+                -4px  4px 0 #064D6C,
+                 4px  4px 0 #064D6C,
+                 0px  6px 0px #064D6C;
+            letter-spacing: -1px;
+            transform: skewX(-5deg); /* เอียงตัวหนังสือนิดๆ ให้ดูมีพลัง */
+        }
+
+        .sticker-text-navy {
             color: #064D6C;
-            font-weight: 700;
-            padding: 8px 20px;
-            border-radius: 16px 16px 0 0;
-            margin-bottom: -1px; /* ดึงให้ติดกับกล่องด้านล่าง */
-            position: relative;
-            z-index: 10;
+            text-shadow: 
+                -3px -3px 0 #ffffff,  
+                 3px -3px 0 #ffffff,
+                -3px  3px 0 #ffffff,
+                 3px  3px 0 #ffffff,
+                 0px  4px 10px rgba(0,0,0,0.2);
+            letter-spacing: -2px;
         }
 
-        /* กล่องพื้นหลังของหมวดหมู่ย่อย */
-        .sub-folder-body {
-            background-color: #e6ecc1;
-            border-radius: 0 16px 16px 16px;
-            padding: 16px;
-            margin-bottom: 24px;
+        /* เมนูลูกศร */
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
+            color: #064D6C;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #A4B644;
+        }
+        .nav-link svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.2s;
+        }
+        .nav-link:hover svg {
+            transform: translate(2px, -2px);
         }
 
-        /* การ์ดรายการ (List Items) สไตล์ซ้อนกัน */
-        .list-card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            transition: transform 0.1s;
-        }
-        .list-card:active {
-            transform: scale(0.98);
-        }
-        
-        /* ป้ายตัวเลขวงกลม */
-        .number-badge {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            flex-shrink: 0;
+        /* ภาพลอยๆ ด้านหลัง */
+        .bg-element {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.4;
+            mix-blend-mode: multiply;
         }
     </style>
 </head>
-<body class="antialiased text-gray-800">
+<body class="antialiased">
 
     <!-- Navbar -->
-    <nav class="bg-white sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-md mx-auto px-4 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-invenavy flex items-center justify-center text-white font-bold text-xs">5S</div>
-                <span class="font-extrabold text-lg text-invenavy">ระบบจัดการ 5ส</span>
+    <nav class="absolute top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+        <!-- โลโก้ด้านซ้าย -->
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-md bg-invenavy flex items-center justify-center text-white font-black text-xl italic tracking-tighter">
+                5S
             </div>
-            <button class="text-invenavy">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
+            <span class="font-extrabold text-2xl text-invenavy tracking-tight">ระบบการจัดการ</span>
+        </div>
+
+        <!-- เมนูตรงกลาง -->
+        <div class="hidden md:flex gap-8">
+            <a href="#" class="nav-link">หลักการ 5ส <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+            <a href="#" class="nav-link">คู่มือปฏิบัติงาน <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+            <a href="#" class="nav-link">ระบบ Automation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+        </div>
+
+        <!-- ค้นหาด้านขวา -->
+        <div class="flex items-center gap-2 text-invenavy font-bold cursor-pointer hover:text-invegreen transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            ค้นหา
         </div>
     </nav>
 
-    <!-- Main Container (จำกัดความกว้างให้ดูเหมือน Mobile App) -->
-    <main class="max-w-md mx-auto pt-6 pb-20 relative">
+    <!-- Hero Section -->
+    <section class="hero-bg relative min-h-screen flex flex-col items-center justify-end pt-24 pb-12 overflow-hidden">
         
-        <!-- แท็บ 5ส (Folder Tabs) -->
-        <div class="flex px-2 gap-1 relative z-20">
-            <!-- Active Tab (S1) -->
-            <div class="main-tab bg-invegreen text-white px-4 py-3 font-bold text-sm shadow-md" id="tab-s1">
-                สะสาง
-            </div>
-            <!-- Inactive Tabs (S2-S5) -->
-            <div class="main-tab bg-tabinactive text-white/80 px-4 py-3 font-semibold text-sm mt-1" id="tab-s2">สะดวก</div>
-            <div class="main-tab bg-tabinactive text-white/80 px-4 py-3 font-semibold text-sm mt-1" id="tab-s3">สะอาด</div>
-            <div class="main-tab bg-tabinactive text-white/80 px-4 py-3 font-semibold text-sm mt-1" id="tab-s4">สุขลักษณะ</div>
-        </div>
+        <!-- รูปภาพตกแต่งพื้นหลัง (สามารถเปลี่ยน src เป็นภาพวาดหรือภาพออฟฟิศได้) -->
+        <img src="https://cdn-icons-png.flaticon.com/512/3165/3165695.png" class="bg-element w-64 left-10 top-32 opacity-10" alt="bg graphic">
+        <img src="https://cdn-icons-png.flaticon.com/512/4149/4149679.png" class="bg-element w-72 right-10 top-40 opacity-10" alt="bg graphic">
 
-        <!-- Folder Body (เนื้อหาด้านในของแฟ้มที่เปิดอยู่) -->
-        <div class="folder-body bg-invegreen w-full p-4 relative z-10 min-h-[600px]">
+        <!-- ศูนย์กลาง (Centerpiece) -->
+        <div class="relative z-10 flex flex-col items-center text-center w-full max-w-5xl mx-auto px-4 mt-auto">
             
-            <!-- Header ของหน้านี้ -->
-            <div class="flex justify-between items-start mb-6 pt-2 px-2">
-                <div>
-                    <h1 class="text-3xl font-extrabold text-invenavy">S1 : สะสาง</h1>
-                    <p class="text-invenavy/80 font-medium text-sm mt-1">ขจัดของที่ไม่จำเป็น เพิ่มพื้นที่ทำงาน</p>
+            <!-- ภาพบุคคลตรงกลาง (ใช้ภาพแบบตัดพื้นหลังโปร่งใส PNG) -->
+            <!-- คุณสามารถเปลี่ยนลิงก์รูปนี้เป็นรูปทีมงานของคุณเองได้ -->
+            <img 
+                src="https://www.pngplay.com/wp-content/uploads/7/Business-Man-Standing-Transparent-Background.png" 
+                alt="Representative" 
+                class="h-[350px] md:h-[500px] object-contain drop-shadow-2xl -mb-10 relative z-20"
+            >
+
+            <!-- กล่องข้อความสไตล์ชัชชาติ (ทับบนตัวคนเล็กน้อย) -->
+            <div class="relative z-30 flex flex-col items-center">
+                <!-- คำว่า "พื้นที่ ทำงาน" -->
+                <div class="transform -rotate-2 mb-2">
+                    <h2 class="text-4xl md:text-5xl font-black text-white bg-invenavy px-4 py-1 inline-block uppercase tracking-widest border-4 border-invenavy shadow-lg">
+                        พื้นที่ทำงาน
+                    </h2>
                 </div>
-                <!-- ไอคอนตกแต่ง (เลียนแบบไอคอนมุมขวาในรูป) -->
-                <div class="w-12 h-12 bg-invenavy rounded-xl flex items-center justify-center opacity-90 transform rotate-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                
+                <!-- คำว่า "ยอดเยี่ยม" ตัวเบ้อเริ่ม -->
+                <h1 class="text-7xl md:text-9xl font-black sticker-text-green uppercase leading-none mb-6">
+                    ยอดเยี่ยม
+                </h1>
+
+                <!-- จำนวนหลักการ -->
+                <h3 class="text-5xl md:text-7xl font-black sticker-text-navy mb-6">
+                    5 หลักการ 5ส
+                </h3>
+
+                <!-- คำอธิบายย่อย -->
+                <p class="text-lg md:text-2xl font-medium text-gray-700 mb-8 max-w-2xl leading-relaxed">
+                    ระบบ Digital Project Management <br>
+                    ที่ออกแบบมาเพื่อลดความซ้ำซ้อน และเพิ่มประสิทธิภาพ<br>
+                    <span class="font-bold text-invenavy">พร้อมเริ่มต้นปฏิบัติงานร่วมกันทันที</span>
+                </p>
+
+                <!-- ปุ่ม Action (สีเขียวสะท้อนแสงนิดๆ) -->
+                <a href="#" class="bg-[#8ec63f] hover:bg-[#7ebd34] text-white font-bold text-xl px-10 py-4 rounded-md shadow-[0_6px_0_#5a8c22] active:shadow-[0_0px_0_#5a8c22] active:translate-y-[6px] transition-all flex items-center gap-2">
+                    เริ่มตรวจประเมิน
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
-                </div>
+                </a>
             </div>
-
-            <!-- หมวดหมู่ย่อย 1: การจัดการพื้นที่ (Physical Space) -->
-            <div>
-                <div class="sub-folder-tab">พื้นที่ปฏิบัติงาน</div>
-                <div class="sub-folder-body">
-                    <div class="list-card">
-                        <span class="font-semibold text-gray-700 text-sm">คัดแยกของที่ใช้และไม่ใช้ออกจากกัน</span>
-                        <div class="number-badge">12</div>
-                    </div>
-                    <div class="list-card">
-                        <span class="font-semibold text-gray-700 text-sm">ติดป้ายรอทิ้ง (Red Tag) ของชำรุด</span>
-                        <div class="number-badge">5</div>
-                    </div>
-                    <div class="list-card">
-                        <span class="font-semibold text-gray-700 text-sm">เคลียร์พื้นที่ใต้โต๊ะทำงานให้โล่ง</span>
-                        <div class="number-badge">8</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- หมวดหมู่ย่อย 2: การจัดการข้อมูล (Digital Data) - ประยุกต์ให้เข้ากับ Digital Workflow ของคุณ -->
-            <div>
-                <div class="sub-folder-tab">ระบบและข้อมูลดิจิทัล</div>
-                <div class="sub-folder-body bg-[#e6ecc1]">
-                    <div class="list-card">
-                        <span class="font-semibold text-gray-700 text-sm">ลบไฟล์เอกสารขยะใน Google Drive</span>
-                        <div class="number-badge">15</div>
-                    </div>
-                    <div class="list-card">
-                        <span class="font-semibold text-gray-700 text-sm">เคลียร์อีเมลและจัดโฟลเดอร์ให้เป็นระเบียบ</span>
-                        <div class="number-badge">9</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ปุ่ม Call to Action ลอยๆ (สไตล์เว็บชัชชาติ) -->
-            <div class="mt-8 flex justify-center">
-                <button class="bg-invenavy text-white font-bold py-4 px-10 rounded-full shadow-lg text-lg flex items-center gap-2 hover:bg-[#043b54] transition">
-                    บันทึกผลการตรวจ
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-
         </div>
-    </main>
+    </section>
 
 </body>
 </html>
