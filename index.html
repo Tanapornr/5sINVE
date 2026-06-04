@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบริหารจัดการ 5ส | 5S Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; }
+        
+        /* สีจากโลโก้ INVE */
+        .bg-navy { background-color: #064D6C; }
+        .text-navy { color: #064D6C; }
+        .bg-olive { background-color: #A4B644; }
+        .text-olive { color: #A4B644; }
+        
+        /* Gradient ไล่สีตามโลโก้ */
+        .bg-gradient-brand {
+            background: linear-gradient(135deg, #064D6C 0%, #086b96 40%, #A4B644 100%);
+        }
+        
+        /* Glassmorphism สำหรับ Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <!-- Hero Section (เลียนแบบความชัดเจนของเว็บ Team Chadchart) -->
+    <header class="bg-gradient-brand text-white pt-20 pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="inline-block py-1 px-4 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold mb-6">
+                DIGITAL PROJECT MANAGEMENT & AUTOMATION WORKFLOW
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                ร่วมสร้างพื้นที่ทำงาน<br>ให้ <span class="text-[#d8e876]">น่าอยู่ และ ปลอดภัย</span>
+            </h1>
+            <p class="text-xl text-blue-100 mb-10 font-light max-w-2xl mx-auto">
+                ระบบรายงานผล 5ส ออนไลน์ สะสาง สะดวก สะอาด สุขลักษณะ สร้างนิสัย เพื่อยกระดับมาตรฐานการปฏิบัติงานร่วมกัน
+            </p>
+            <a href="#report-form" class="inline-block bg-olive hover:bg-[#8f9f3b] text-white font-bold text-lg px-8 py-4 rounded-full transition shadow-lg transform hover:-translate-y-1">
+                รายงานผล 5ส ประจำวัน
+            </a>
+        </div>
+    </header>
+
+    <!-- Form Section -->
+    <section id="report-form" class="py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto -mt-10 relative z-10">
+        <div class="glass-card rounded-3xl p-8 md:p-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-navy mb-2">ส่งรายงานการตรวจประเมิน</h2>
+                <p class="text-gray-500">กรุณากรอกข้อมูลให้ครบถ้วนเพื่อบันทึกลงระบบ</p>
+            </div>
+
+            <!-- แบบฟอร์ม -->
+            <form id="ssForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-navy mb-2">ชื่อ-นามสกุล ผู้รายงาน</label>
+                        <input type="text" id="reporterName" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-navy mb-2">พื้นที่รับผิดชอบ / แผนก</label>
+                        <input type="text" id="area" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-navy mb-2">ผลการประเมินภาพรวม (1-5 ดาว)</label>
+                    <select id="score" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy outline-none transition bg-white">
+                        <option value="">-- เลือกคะแนน --</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (ดีเยี่ยม)</option>
+                        <option value="4">⭐⭐⭐⭐ (ดี)</option>
+                        <option value="3">⭐⭐⭐ (ปานกลาง)</option>
+                        <option value="2">⭐⭐ (ต้องปรับปรุง)</option>
+                        <option value="1">⭐ (แย่มาก)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-navy mb-2">รายละเอียดเพิ่มเติม / สิ่งที่ต้องปรับปรุง</label>
+                    <textarea id="details" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-navy focus:border-navy outline-none transition"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-navy hover:bg-[#043b54] text-white font-bold text-lg px-8 py-4 rounded-xl transition shadow-md flex justify-center items-center">
+                    <span>บันทึกข้อมูลเข้าสู่ระบบ</span>
+                </button>
+                
+                <!-- ข้อความแสดงสถานะ -->
+                <div id="statusMessage" class="hidden text-center mt-4 font-medium rounded-lg p-3"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- JavaScript สำหรับส่งข้อมูลไป Google Apps Script -->
+    <script>
+        // *** นำ URL ของ Web App จาก Google Apps Script มาใส่ตรงนี้ ***
+        const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+        document.getElementById('ssForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // ป้องกันการรีเฟรชหน้าเว็บ
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // เปลี่ยนสถานะปุ่ม
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'กำลังบันทึกข้อมูล...';
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            statusMessage.classList.add('hidden');
+
+            // เตรียมข้อมูลส่งไป Backend
+            const formData = {
+                name: document.getElementById('reporterName').value,
+                area: document.getElementById('area').value,
+                score: document.getElementById('score').value,
+                details: document.getElementById('details').value
+            };
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    // ใช้ text/plain เพื่อเลี่ยงปัญหา CORS Policy 
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    // สำเร็จ
+                    document.getElementById('ssForm').reset();
+                    statusMessage.textContent = '✅ บันทึกข้อมูลเรียบร้อยแล้ว!';
+                    statusMessage.className = 'block text-center mt-4 font-medium rounded-lg p-3 bg-green-100 text-green-700';
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                // ผิดพลาด
+                console.error('Error:', error);
+                statusMessage.textContent = '❌ เกิดข้อผิดพลาด ไม่สามารถส่งข้อมูลได้';
+                statusMessage.className = 'block text-center mt-4 font-medium rounded-lg p-3 bg-red-100 text-red-700';
+            } finally {
+                // คืนค่าปุ่มกลับมาเหมือนเดิม
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'บันทึกข้อมูลเข้าสู่ระบบ';
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+</html>
