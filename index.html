@@ -21,7 +21,6 @@
         }
     </script>
     <style>
-        /* ล็อคไม่ให้เลื่อนซ้าย-ขวาบนมือถือ */
         body, html { 
             background-color: #ffffff; 
             overflow-x: hidden;
@@ -32,7 +31,6 @@
             background: linear-gradient(180deg, rgba(164,182,68,0.15) 0%, rgba(6,77,108,0.05) 60%, rgba(255,255,255,1) 100%);
         }
 
-        /* ปรับเงาให้เล็กลงนิดหน่อยเพื่อให้ดูดีบนมือถือ */
         .sticker-text-green {
             color: #A4B644;
             text-shadow: 
@@ -56,7 +54,6 @@
             letter-spacing: -1px;
         }
 
-        /* เมนู Desktop */
         .nav-link {
             display: inline-flex;
             align-items: center;
@@ -78,10 +75,10 @@
 <body class="antialiased">
 
     <nav class="absolute top-0 w-full z-50 px-4 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 md:w-10 md:h-10 rounded-md bg-invenavy flex items-center justify-center text-white font-black text-lg md:text-xl italic tracking-tighter shadow-md">
-                5S
-            </div>
+        <div class="flex items-center gap-3">
+            <img src="inve-logo.png" alt="INVE Aquaculture" class="h-10 md:h-14 object-contain drop-shadow-sm">
+            
+            <div class="h-8 border-l-2 border-gray-300"></div>
             <span class="font-extrabold text-lg md:text-2xl text-invenavy tracking-tight">ระบบ 5ส</span>
         </div>
 
