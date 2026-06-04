@@ -2,11 +2,9 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>หน้าแรก | 5S Management System</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Prompt -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
@@ -23,41 +21,42 @@
         }
     </script>
     <style>
-        body { 
+        /* ล็อคไม่ให้เลื่อนซ้าย-ขวาบนมือถือ */
+        body, html { 
             background-color: #ffffff; 
             overflow-x: hidden;
+            width: 100%;
         }
 
-        /* พื้นหลังไล่สีแบบเว็บชัชชาติ (สีเขียวอ่อน/ฟ้าอ่อน ไล่ลงมาเป็นสีขาว) */
         .hero-bg {
             background: linear-gradient(180deg, rgba(164,182,68,0.15) 0%, rgba(6,77,108,0.05) 60%, rgba(255,255,255,1) 100%);
         }
 
-        /* เอฟเฟกต์ตัวหนังสือขอบหนา (Sticker Effect แบบ "กรุงเทพฯ ทำงาน") */
+        /* ปรับเงาให้เล็กลงนิดหน่อยเพื่อให้ดูดีบนมือถือ */
         .sticker-text-green {
             color: #A4B644;
             text-shadow: 
-                -4px -4px 0 #064D6C,  
-                 4px -4px 0 #064D6C,
-                -4px  4px 0 #064D6C,
-                 4px  4px 0 #064D6C,
-                 0px  6px 0px #064D6C;
+                -2px -2px 0 #064D6C,  
+                 2px -2px 0 #064D6C,
+                -2px  2px 0 #064D6C,
+                 2px  2px 0 #064D6C,
+                 0px  4px 0px #064D6C;
             letter-spacing: -1px;
-            transform: skewX(-5deg); /* เอียงตัวหนังสือนิดๆ ให้ดูมีพลัง */
+            transform: skewX(-5deg);
         }
 
         .sticker-text-navy {
             color: #064D6C;
             text-shadow: 
-                -3px -3px 0 #ffffff,  
-                 3px -3px 0 #ffffff,
-                -3px  3px 0 #ffffff,
-                 3px  3px 0 #ffffff,
-                 0px  4px 10px rgba(0,0,0,0.2);
-            letter-spacing: -2px;
+                -2px -2px 0 #ffffff,  
+                 2px -2px 0 #ffffff,
+                -2px  2px 0 #ffffff,
+                 2px  2px 0 #ffffff,
+                 0px  3px 8px rgba(0,0,0,0.15);
+            letter-spacing: -1px;
         }
 
-        /* เมนูลูกศร */
+        /* เมนู Desktop */
         .nav-link {
             display: inline-flex;
             align-items: center;
@@ -66,103 +65,84 @@
             color: #064D6C;
             transition: color 0.2s;
         }
-        .nav-link:hover {
-            color: #A4B644;
-        }
-        .nav-link svg {
-            width: 14px;
-            height: 14px;
-            transition: transform 0.2s;
-        }
-        .nav-link:hover svg {
-            transform: translate(2px, -2px);
-        }
+        .nav-link:hover { color: #A4B644; }
 
-        /* ภาพลอยๆ ด้านหลัง */
         .bg-element {
             position: absolute;
             z-index: 0;
-            opacity: 0.4;
+            opacity: 0.3;
             mix-blend-mode: multiply;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Navbar -->
-    <nav class="absolute top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
-        <!-- โลโก้ด้านซ้าย -->
+    <nav class="absolute top-0 w-full z-50 px-4 py-4 flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <div class="w-10 h-10 rounded-md bg-invenavy flex items-center justify-center text-white font-black text-xl italic tracking-tighter">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-md bg-invenavy flex items-center justify-center text-white font-black text-lg md:text-xl italic tracking-tighter shadow-md">
                 5S
             </div>
-            <span class="font-extrabold text-2xl text-invenavy tracking-tight">ระบบการจัดการ</span>
+            <span class="font-extrabold text-lg md:text-2xl text-invenavy tracking-tight">ระบบ 5ส</span>
         </div>
 
-        <!-- เมนูตรงกลาง -->
         <div class="hidden md:flex gap-8">
-            <a href="#" class="nav-link">หลักการ 5ส <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-            <a href="#" class="nav-link">คู่มือปฏิบัติงาน <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-            <a href="#" class="nav-link">ระบบ Automation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+            <a href="#" class="nav-link">หลักการ 5ส ↗</a>
+            <a href="#" class="nav-link">คู่มือปฏิบัติงาน ↗</a>
         </div>
 
-        <!-- ค้นหาด้านขวา -->
-        <div class="flex items-center gap-2 text-invenavy font-bold cursor-pointer hover:text-invegreen transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            ค้นหา
+        <div class="flex items-center gap-3 text-invenavy">
+            <button class="font-bold flex items-center gap-1 hover:text-invegreen transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <span class="hidden md:block">ค้นหา</span>
+            </button>
+            <button class="md:hidden block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-bg relative min-h-screen flex flex-col items-center justify-end pt-24 pb-12 overflow-hidden">
+    <section class="hero-bg relative min-h-[100dvh] flex flex-col items-center justify-end pt-20 pb-10 overflow-hidden">
         
-        <!-- รูปภาพตกแต่งพื้นหลัง (สามารถเปลี่ยน src เป็นภาพวาดหรือภาพออฟฟิศได้) -->
-        <img src="https://cdn-icons-png.flaticon.com/512/3165/3165695.png" class="bg-element w-64 left-10 top-32 opacity-10" alt="bg graphic">
-        <img src="https://cdn-icons-png.flaticon.com/512/4149/4149679.png" class="bg-element w-72 right-10 top-40 opacity-10" alt="bg graphic">
+        <img src="https://cdn-icons-png.flaticon.com/512/3165/3165695.png" class="bg-element w-32 md:w-64 -left-10 md:left-10 top-24 md:top-32 opacity-10" alt="bg graphic">
+        <img src="https://cdn-icons-png.flaticon.com/512/4149/4149679.png" class="bg-element w-40 md:w-72 -right-12 md:right-10 top-32 md:top-40 opacity-10" alt="bg graphic">
 
-        <!-- ศูนย์กลาง (Centerpiece) -->
         <div class="relative z-10 flex flex-col items-center text-center w-full max-w-5xl mx-auto px-4 mt-auto">
             
-            <!-- ภาพบุคคลตรงกลาง (ใช้ภาพแบบตัดพื้นหลังโปร่งใส PNG) -->
-            <!-- คุณสามารถเปลี่ยนลิงก์รูปนี้เป็นรูปทีมงานของคุณเองได้ -->
             <img 
                 src="https://www.pngplay.com/wp-content/uploads/7/Business-Man-Standing-Transparent-Background.png" 
                 alt="Representative" 
-                class="h-[350px] md:h-[500px] object-contain drop-shadow-2xl -mb-10 relative z-20"
+                class="h-[250px] sm:h-[320px] md:h-[500px] object-contain drop-shadow-xl -mb-6 md:-mb-10 relative z-20"
             >
 
-            <!-- กล่องข้อความสไตล์ชัชชาติ (ทับบนตัวคนเล็กน้อย) -->
-            <div class="relative z-30 flex flex-col items-center">
-                <!-- คำว่า "พื้นที่ ทำงาน" -->
-                <div class="transform -rotate-2 mb-2">
-                    <h2 class="text-4xl md:text-5xl font-black text-white bg-invenavy px-4 py-1 inline-block uppercase tracking-widest border-4 border-invenavy shadow-lg">
+            <div class="relative z-30 flex flex-col items-center w-full">
+                
+                <div class="transform -rotate-2 mb-1 md:mb-2">
+                    <h2 class="text-2xl md:text-5xl font-black text-white bg-invenavy px-3 py-1 md:px-4 inline-block uppercase tracking-widest border-2 md:border-4 border-invenavy shadow-lg">
                         พื้นที่ทำงาน
                     </h2>
                 </div>
                 
-                <!-- คำว่า "ยอดเยี่ยม" ตัวเบ้อเริ่ม -->
-                <h1 class="text-7xl md:text-9xl font-black sticker-text-green uppercase leading-none mb-6">
+                <h1 class="text-[3.5rem] leading-[1] md:text-9xl font-black sticker-text-green uppercase mb-2 md:mb-6 w-full truncate">
                     ยอดเยี่ยม
                 </h1>
 
-                <!-- จำนวนหลักการ -->
-                <h3 class="text-5xl md:text-7xl font-black sticker-text-navy mb-6">
+                <h3 class="text-3xl md:text-7xl font-black sticker-text-navy mb-4 md:mb-6">
                     5 หลักการ 5ส
                 </h3>
 
-                <!-- คำอธิบายย่อย -->
-                <p class="text-lg md:text-2xl font-medium text-gray-700 mb-8 max-w-2xl leading-relaxed">
+                <p class="text-sm md:text-2xl font-medium text-gray-700 mb-6 md:mb-8 max-w-[90%] md:max-w-2xl leading-relaxed">
                     ระบบ Digital Project Management <br>
-                    ที่ออกแบบมาเพื่อลดความซ้ำซ้อน และเพิ่มประสิทธิภาพ<br>
-                    <span class="font-bold text-invenavy">พร้อมเริ่มต้นปฏิบัติงานร่วมกันทันที</span>
+                    ที่ออกแบบมาเพื่อลดความซ้ำซ้อน เพิ่มประสิทธิภาพ<br>
+                    <span class="font-bold text-invenavy">พร้อมเริ่มต้นปฏิบัติงานทันที</span>
                 </p>
 
-                <!-- ปุ่ม Action (สีเขียวสะท้อนแสงนิดๆ) -->
-                <a href="#" class="bg-[#8ec63f] hover:bg-[#7ebd34] text-white font-bold text-xl px-10 py-4 rounded-md shadow-[0_6px_0_#5a8c22] active:shadow-[0_0px_0_#5a8c22] active:translate-y-[6px] transition-all flex items-center gap-2">
-                    เริ่มตรวจประเมิน
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                <a href="#" class="bg-[#8ec63f] hover:bg-[#7ebd34] text-white font-bold text-lg md:text-xl px-8 py-3 md:px-10 md:py-4 rounded-md shadow-[0_5px_0_#5a8c22] active:shadow-[0_0px_0_#5a8c22] active:translate-y-[5px] transition-all flex items-center gap-2">
+                    ดูนโยบาย
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
                 </a>
