@@ -1,293 +1,192 @@
 <!DOCTYPE html>
-<html lang="th" class="scroll-smooth">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>นโยบาย 5ส | 5S Management System</title>
+    <title>5S Policy & Checklist | แบบฟอร์มทีมชัชชาติ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Prompt', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Prompt', 'sans-serif'] },
                     colors: {
                         invenavy: '#064D6C',
                         invegreen: '#A4B644',
-                        invegray: '#F3F4F6'
+                        // สีสำหรับแท็บที่ไม่ได้เลือก
+                        tabinactive: '#8c9c3a', 
+                        bglight: '#f4f6eb'
                     }
                 }
             }
         }
     </script>
     <style>
-        /* สไตล์การไล่สีตามโลโก้ */
-        .bg-hero-gradient {
-            background: linear-gradient(135deg, #064D6C 0%, #0a668f 50%, #A4B644 100%);
-        }
-        /* เงาของการ์ดแบบเว็บชัชชาติ */
-        .card-shadow {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        body { background-color: #ffffff; }
+        
+        /* สไตล์แท็บหลัก (Main Folder Tab) */
+        .main-tab {
+            border-radius: 16px 16px 0 0;
             transition: all 0.2s ease-in-out;
+            cursor: pointer;
         }
-        .card-shadow:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(6, 77, 108, 0.15);
+        
+        /* พื้นที่เนื้อหาหลัก (Main Folder Body) */
+        .folder-body {
+            border-radius: 0 24px 24px 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
-        /* ตัดขอบมุมบนซ้าย-ล่างขวา (ดีไซน์กิมมิค) */
-        .btn-cut {
-            border-radius: 16px 4px 16px 4px;
+
+        /* สไตล์แท็บหัวข้อย่อย (Sub-folder Tab) เหมือนในรูป "การเดินทาง / สุขภาพ" */
+        .sub-folder-tab {
+            display: inline-block;
+            background-color: #e6ecc1; /* สีเขียวอ่อนๆ */
+            color: #064D6C;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 16px 16px 0 0;
+            margin-bottom: -1px; /* ดึงให้ติดกับกล่องด้านล่าง */
+            position: relative;
+            z-index: 10;
+        }
+
+        /* กล่องพื้นหลังของหมวดหมู่ย่อย */
+        .sub-folder-body {
+            background-color: #e6ecc1;
+            border-radius: 0 16px 16px 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        /* การ์ดรายการ (List Items) สไตล์ซ้อนกัน */
+        .list-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.1s;
+        }
+        .list-card:active {
+            transform: scale(0.98);
+        }
+        
+        /* ป้ายตัวเลขวงกลม */
+        .number-badge {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body class="antialiased text-gray-800">
 
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-full bg-hero-gradient flex items-center justify-center text-white font-bold text-xl">
-                        5S
-                    </div>
-                    <span class="font-extrabold text-2xl text-invenavy tracking-tight">ระบบการจัดการ 5ส</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-6 font-medium">
-                    <a href="#policies" class="text-gray-600 hover:text-invegreen transition">นโยบาย 5ส</a>
-                    <a href="#report" class="bg-invenavy text-white px-6 py-2.5 btn-cut hover:bg-invegreen transition duration-300">
-                        รายงานผล / ตรวจประเมิน
-                    </a>
-                </div>
+    <!-- Navbar -->
+    <nav class="bg-white sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-md mx-auto px-4 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-invenavy flex items-center justify-center text-white font-bold text-xs">5S</div>
+                <span class="font-extrabold text-lg text-invenavy">ระบบจัดการ 5ส</span>
             </div>
+            <button class="text-invenavy">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <section class="bg-hero-gradient text-white pt-24 pb-32 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 2px, transparent 2px); background-size: 30px 30px;"></div>
+    <!-- Main Container (จำกัดความกว้างให้ดูเหมือน Mobile App) -->
+    <main class="max-w-md mx-auto pt-6 pb-20 relative">
         
-        <div class="max-w-7xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <span class="inline-block py-1.5 px-4 bg-white text-invenavy font-bold rounded-full text-sm mb-6">
-                    ปฏิบัติการร่วมกัน ทันที!
-                </span>
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-[1.1] tracking-tight">
-                    สร้างพื้นที่ <br>
-                    <span class="text-invegreen drop-shadow-md">ทำงานน่าอยู่</span><br>
-                    เพิ่มประสิทธิภาพ
-                </h1>
-                <p class="text-xl md:text-2xl font-light mb-10 text-blue-50 border-l-4 border-invegreen pl-4">
-                    "สะสาง สะดวก สะอาด สุขลักษณะ สร้างนิสัย" <br> 5 นโยบายหลักสู่ความสำเร็จระดับองค์กร
-                </p>
-                <div class="flex gap-4">
-                    <a href="#policies" class="bg-white text-invenavy font-bold text-lg px-8 py-4 btn-cut hover:bg-gray-100 transition shadow-lg">
-                        อ่านนโยบาย
-                    </a>
-                    <a href="#report" class="border-2 border-invegreen bg-invegreen/20 backdrop-blur-sm text-white font-bold text-lg px-8 py-4 btn-cut hover:bg-invegreen transition">
-                        แจ้งประเมินพื้นที่
-                    </a>
-                </div>
+        <!-- แท็บ 5ส (Folder Tabs) -->
+        <div class="flex px-2 gap-1 relative z-20">
+            <!-- Active Tab (S1) -->
+            <div class="main-tab bg-invegreen text-white px-4 py-3 font-bold text-sm shadow-md" id="tab-s1">
+                สะสาง
             </div>
-            <div class="hidden md:flex justify-end">
-                <div class="w-96 h-96 bg-white/10 backdrop-blur-md border-4 border-invegreen rounded-full flex items-center justify-center p-8">
-                    <h2 class="text-8xl font-extrabold text-white opacity-80 text-center leading-none">
-                        5S<br><span class="text-4xl text-invegreen">SYSTEM</span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="policies" class="py-20 px-4 max-w-7xl mx-auto -mt-16 relative z-20">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-10 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-            <div>
-                <h2 class="text-4xl font-extrabold text-invenavy mb-2">5 นโยบายหลัก (5S)</h2>
-                <p class="text-gray-500 text-lg">หลักการปฏิบัติเพื่อความเป็นระเบียบเรียบร้อย</p>
-            </div>
-            <div class="text-3xl font-extrabold text-invegreen mt-4 md:mt-0">
-                100% โปร่งใส
-            </div>
+            <!-- Inactive Tabs (S2-S5) -->
+            <div class="main-tab bg-tabinactive text-white/80 px-4 py-3 font-semibold text-sm mt-1" id="tab-s2">สะดวก</div>
+            <div class="main-tab bg-tabinactive text-white/80 px-4 py-3 font-semibold text-sm mt-1" id="tab-s3">สะอาด</div>
+            <div class="main-tab bg-tabinactive text-white/80 px-4 py-3 font-semibold text-sm mt-1" id="tab-s4">สุขลักษณะ</div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="bg-white rounded-xl p-6 card-shadow border-t-4 border-invenavy">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-blue-100 text-invenavy text-xs font-bold px-3 py-1 rounded-full">S1 - SEIRI</span>
-                    <span class="text-gray-300 font-extrabold text-2xl">01</span>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-3 hover:text-invegreen transition">สะสาง (Sort)</h3>
-                <p class="text-gray-600 line-clamp-3">
-                    แยกของที่จำเป็นและไม่จำเป็นออกจากกัน กำจัดสิ่งของที่ไม่จำเป็นทิ้งไป เพื่อเพิ่มพื้นที่ใช้สอยและลดความซ้ำซ้อน
-                </p>
-            </div>
-
-            <div class="bg-white rounded-xl p-6 card-shadow border-t-4 border-invegreen">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-green-100 text-invegreen text-xs font-bold px-3 py-1 rounded-full">S2 - SEITON</span>
-                    <span class="text-gray-300 font-extrabold text-2xl">02</span>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-3 hover:text-invegreen transition">สะดวก (Set in Order)</h3>
-                <p class="text-gray-600 line-clamp-3">
-                    จัดวางสิ่งของให้เป็นระเบียบ มีป้ายบอกชัดเจน หยิบใช้ง่าย หายก็รู้ ดูก็งาม เพื่อลดเวลาในการค้นหา
-                </p>
-            </div>
-
-            <div class="bg-white rounded-xl p-6 card-shadow border-t-4 border-invenavy">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-blue-100 text-invenavy text-xs font-bold px-3 py-1 rounded-full">S3 - SEISO</span>
-                    <span class="text-gray-300 font-extrabold text-2xl">03</span>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-3 hover:text-invegreen transition">สะอาด (Shine)</h3>
-                <p class="text-gray-600 line-clamp-3">
-                    ทำความสะอาดเครื่องมือ เครื่องจักร และพื้นที่ทำงานให้ปราศจากฝุ่นและสิ่งสกปรก พร้อมใช้งานเสมอ
-                </p>
-            </div>
-
-            <div class="bg-white rounded-xl p-6 card-shadow border-t-4 border-invegreen">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-green-100 text-invegreen text-xs font-bold px-3 py-1 rounded-full">S4 - SEIKETSU</span>
-                    <span class="text-gray-300 font-extrabold text-2xl">04</span>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-3 hover:text-invegreen transition">สุขลักษณะ (Standardize)</h3>
-                <p class="text-gray-600 line-clamp-3">
-                    รักษามาตรฐานของ 3ส แรกให้ดีอยู่เสมอ และค้นหาวิธีการปรับปรุงเพื่อป้องกันไม่ให้กลับไปรกหรือสกปรกอีก
-                </p>
-            </div>
-
-            <div class="bg-white rounded-xl p-6 card-shadow border-t-4 border-invenavy bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-invenavy text-white text-xs font-bold px-3 py-1 rounded-full">S5 - SHITSUKE</span>
-                    <span class="text-gray-300 font-extrabold text-2xl">05</span>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-3 hover:text-invegreen transition">สร้างนิสัย (Sustain)</h3>
-                <p class="text-gray-600 line-clamp-3">
-                    อบรมและปฏิบัติตามกฎระเบียบอย่างเคร่งครัดจนกลายเป็นนิสัย เพื่อรักษาวัฒนธรรมองค์กรที่ดีตลอดไป
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="report" class="py-20 bg-invegray border-t border-gray-200">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <span class="text-invegreen font-bold tracking-widest uppercase text-sm">Action Area</span>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-invenavy mt-2">รายงานผล / ประเมิน 5ส</h2>
-                <div class="w-24 h-2 bg-invegreen mx-auto mt-6 mb-4"></div>
-                <p class="text-gray-600 text-lg">ข้อมูลจะถูกส่งตรงเข้าสู่ระบบ Google Sheets ทันที เพื่อความโปร่งใสและตรวจสอบได้</p>
-            </div>
-
-            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl">
-                <form id="ssForm" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">ชื่อ-นามสกุล / รหัสพนักงาน <span class="text-red-500">*</span></label>
-                            <input type="text" id="reporterName" required placeholder="นายรักสะอาด ทำงานดี" class="w-full px-5 py-4 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-invegreen focus:border-invegreen outline-none transition text-lg">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">พื้นที่ตรวจประเมิน / แผนก <span class="text-red-500">*</span></label>
-                            <input type="text" id="area" required placeholder="ระบุแผนก หรือ โซนทำงาน" class="w-full px-5 py-4 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-invegreen focus:border-invegreen outline-none transition text-lg">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">ผลการประเมินโดยรวม <span class="text-red-500">*</span></label>
-                        <select id="score" required class="w-full px-5 py-4 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-invegreen focus:border-invegreen outline-none transition text-lg appearance-none">
-                            <option value="">-- คลิกเพื่อเลือกผลการประเมิน --</option>
-                            <option value="5">ผ่านเกณฑ์ดีเยี่ยม (ไม่มีข้อบกพร่อง)</option>
-                            <option value="4">ผ่านเกณฑ์ (มีจุดต้องปรับปรุงเล็กน้อย)</option>
-                            <option value="3">ปานกลาง (ต้องจัดระเบียบเพิ่มเติม)</option>
-                            <option value="2">ต่ำกว่าเกณฑ์ (ต้องเร่งแก้ไข)</option>
-                            <option value="1">ไม่ผ่านเกณฑ์ (วิกฤต/อันตราย)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">รายละเอียดข้อบกพร่อง / สิ่งที่ต้องแก้ไข</label>
-                        <textarea id="details" rows="4" placeholder="ระบุรายละเอียดเพิ่มเติม เพื่อให้ทีมงานเข้าแก้ไข..." class="w-full px-5 py-4 rounded-lg bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-invegreen focus:border-invegreen outline-none transition text-lg"></textarea>
-                    </div>
-
-                    <button type="submit" id="submitBtn" class="w-full bg-invenavy hover:bg-[#043b54] text-white font-extrabold text-xl px-8 py-5 btn-cut transition shadow-lg mt-4 flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                        ส่งรายงานประเมิน
-                    </button>
-                    
-                    <div id="statusMessage" class="hidden text-center mt-4 font-bold text-lg rounded-lg p-4"></div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-invenavy text-white py-12 border-t-8 border-invegreen">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h3 class="text-2xl font-extrabold mb-4">INVE AQUACULTURE 5S SYSTEM</h3>
-            <p class="text-blue-200 mb-6 font-light">ระบบปฏิบัติการเพื่อยกระดับมาตรฐานการทำงาน โปร่งใส ตรวจสอบได้</p>
-            <p class="text-sm text-blue-400">© 2024 5S Management System. Powered by Vercel & Google Apps Script.</p>
-        </div>
-    </footer>
-
-    <script>
-        // 🚨 นำ URL ของ Web App จาก Google Apps Script มาใส่ตรงนี้ 🚨
-        const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
-
-        document.getElementById('ssForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        <!-- Folder Body (เนื้อหาด้านในของแฟ้มที่เปิดอยู่) -->
+        <div class="folder-body bg-invegreen w-full p-4 relative z-10 min-h-[600px]">
             
-            const submitBtn = document.getElementById('submitBtn');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            // UI Loading State
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                กำลังส่งข้อมูล...
-            `;
-            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            statusMessage.classList.add('hidden');
-
-            const formData = {
-                name: document.getElementById('reporterName').value,
-                area: document.getElementById('area').value,
-                score: document.getElementById('score').value,
-                details: document.getElementById('details').value
-            };
-
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(formData),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    document.getElementById('ssForm').reset();
-                    statusMessage.innerHTML = '✨ ส่งรายงานเรียบร้อยแล้ว ขอบคุณที่ร่วมกันพัฒนาพื้นที่!';
-                    statusMessage.className = 'block text-center mt-4 font-bold text-lg rounded-lg p-4 bg-green-100 text-green-700 border border-green-300';
-                } else {
-                    throw new Error(result.message);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                statusMessage.innerHTML = '❌ ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง';
-                statusMessage.className = 'block text-center mt-4 font-bold text-lg rounded-lg p-4 bg-red-100 text-red-700 border border-red-300';
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            <!-- Header ของหน้านี้ -->
+            <div class="flex justify-between items-start mb-6 pt-2 px-2">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-invenavy">S1 : สะสาง</h1>
+                    <p class="text-invenavy/80 font-medium text-sm mt-1">ขจัดของที่ไม่จำเป็น เพิ่มพื้นที่ทำงาน</p>
+                </div>
+                <!-- ไอคอนตกแต่ง (เลียนแบบไอคอนมุมขวาในรูป) -->
+                <div class="w-12 h-12 bg-invenavy rounded-xl flex items-center justify-center opacity-90 transform rotate-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
-                    ส่งรายงานประเมิน
-                `;
-                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
-            }
-        });
-    </script>
+                </div>
+            </div>
+
+            <!-- หมวดหมู่ย่อย 1: การจัดการพื้นที่ (Physical Space) -->
+            <div>
+                <div class="sub-folder-tab">พื้นที่ปฏิบัติงาน</div>
+                <div class="sub-folder-body">
+                    <div class="list-card">
+                        <span class="font-semibold text-gray-700 text-sm">คัดแยกของที่ใช้และไม่ใช้ออกจากกัน</span>
+                        <div class="number-badge">12</div>
+                    </div>
+                    <div class="list-card">
+                        <span class="font-semibold text-gray-700 text-sm">ติดป้ายรอทิ้ง (Red Tag) ของชำรุด</span>
+                        <div class="number-badge">5</div>
+                    </div>
+                    <div class="list-card">
+                        <span class="font-semibold text-gray-700 text-sm">เคลียร์พื้นที่ใต้โต๊ะทำงานให้โล่ง</span>
+                        <div class="number-badge">8</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- หมวดหมู่ย่อย 2: การจัดการข้อมูล (Digital Data) - ประยุกต์ให้เข้ากับ Digital Workflow ของคุณ -->
+            <div>
+                <div class="sub-folder-tab">ระบบและข้อมูลดิจิทัล</div>
+                <div class="sub-folder-body bg-[#e6ecc1]">
+                    <div class="list-card">
+                        <span class="font-semibold text-gray-700 text-sm">ลบไฟล์เอกสารขยะใน Google Drive</span>
+                        <div class="number-badge">15</div>
+                    </div>
+                    <div class="list-card">
+                        <span class="font-semibold text-gray-700 text-sm">เคลียร์อีเมลและจัดโฟลเดอร์ให้เป็นระเบียบ</span>
+                        <div class="number-badge">9</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ปุ่ม Call to Action ลอยๆ (สไตล์เว็บชัชชาติ) -->
+            <div class="mt-8 flex justify-center">
+                <button class="bg-invenavy text-white font-bold py-4 px-10 rounded-full shadow-lg text-lg flex items-center gap-2 hover:bg-[#043b54] transition">
+                    บันทึกผลการตรวจ
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </main>
+
 </body>
 </html>
